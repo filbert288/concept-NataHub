@@ -135,7 +135,30 @@ function auth(){
     '<div class="btns"><button class="btn ghost" id="bk2">← Kembali</button><button class="btn" id="go">Mulai pakai NataHub →</button></div></div>';
   }
   var ft=lo?'<div class="af"><span>Enkripsi SSL 256-bit aktif</span><span>Kebijakan Privasi · Syarat &amp; Ketentuan · Pusat Bantuan</span></div>':'<p class="lbl ac" style="padding:0 18px 20px;margin:0">Dengan mendaftar, kamu menyetujui <b>Syarat &amp; Ketentuan</b> serta <b>Kebijakan Privasi Data</b> NataHub.</p>';
-  return hd+'<div class="ab">'+b+'</div>'+ft;
+  return '<div class="auth-shell">'+
+    '<section class="auth-visual" aria-label="Tentang NataHub">'+
+      '<div class="hero-brand"><span class="hero-mark">N</span><span class="hero-word">NataHub</span><span class="hero-product">BUSINESS OS</span></div>'+
+      '<div class="hero-content">'+
+        '<div class="hero-eyebrow"><span></span> OPERASIONAL BISNIS DALAM SATU RUANG</div>'+
+        '<h1>Bisnis bergerak.<br><em>Kamu tetap pegang kendali.</em></h1>'+
+        '<p>Persediaan, percakapan pelanggan, dan rencana restock tersusun dalam satu workspace yang lebih rapi.</p>'+
+        '<div class="hero-tiles">'+
+          '<div class="hero-tile"><span>01 / STOK</span><b>Inventory terpantau</b><small>Lihat stok dan kebutuhan restock.</small></div>'+
+          '<div class="hero-tile"><span>02 / CHAT</span><b>Inbox lebih terarah</b><small>Prioritaskan pesan yang penting.</small></div>'+
+          '<div class="hero-tile"><span>03 / FLOW</span><b>Otomasi terkendali</b><small>Persetujuan tetap di tanganmu.</small></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="hero-console" aria-hidden="true">'+
+        '<div class="console-top"><i></i><i></i><i></i><span>BUSINESS OVERVIEW / DEMO</span></div>'+
+        '<div class="console-grid">'+
+          '<div class="console-mini"><span>Inventory health</span><strong>99.4% <em>↑ stabil</em></strong><div class="console-spark"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>'+
+          '<div class="console-mini"><span>Pesanan hari ini</span><strong>38 <em>+12%</em></strong><div class="console-stock"><span>Status operasional</span><b>Terpantau</b></div></div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="hero-foot"><span>DIBUAT UNTUK OPERASIONAL HARIAN</span><span>© NataHub 2026</span></div>'+
+    '</section>'+
+    '<section class="auth-content">'+hd+'<div class="ab">'+b+'</div>'+ft+'</section>'+
+  '</div>';
 }
 function bindAuth(){
   var g=function(i,f){if($(i))$(i).onclick=f},v=function(i,f){if($(i))$(i).oninput=function(){f($(i).value)}};
