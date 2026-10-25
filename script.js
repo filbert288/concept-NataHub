@@ -17,6 +17,8 @@ var tab = "ov",
   nd = 0,
   sim = false;
 
+var LOGO = "NataHub%20Purple%20Ribbon%20Logo.png";
+
 var P = [
   { n: "Kopi Arabika", s: 30, t: 24, u: 20, min: 20, exp: "8 bulan", b: "B-0412" },
   { n: "Mie Instan", s: 120, t: 8, u: 20, min: 40, exp: "5 bulan", b: "B-0388" },
@@ -103,17 +105,21 @@ var MENU = [
 
 function ins(n) {
   var x = 0;
+
   H.forEach(function (h) {
     if (h.p === n && h.k === "in") x += h.q;
   });
+
   return x;
 }
 
 function outs(n) {
   var x = 0;
+
   H.forEach(function (h) {
     if (h.p === n && h.k === "out") x += h.q;
   });
+
   return x;
 }
 
@@ -124,7 +130,8 @@ function stock(i) {
 function classify(t) {
   t = t.toLowerCase();
 
-  var b = 0, a = 0;
+  var b = 0;
+  var a = 0;
   var q = /\?|masih ada|resi|jam buka|stok/.test(t);
 
   [
@@ -147,28 +154,55 @@ function classify(t) {
 }
 
 function rec(p) {
-  return p.t >= 15
-    ? { l: "HIGH DEMAND", c: "g", q: Math.round(p.u * 1.5), a: "Naikkan" }
-    : p.t >= 0
-      ? { l: "MEDIUM DEMAND", c: "a", q: p.u, a: "Pertahankan" }
-      : { l: "LOW DEMAND", c: "r", q: Math.round(p.u * 0.5), a: "Kurangi" };
+  if (p.t >= 15) {
+    return {
+      l: "HIGH DEMAND",
+      c: "g",
+      q: Math.round(p.u * 1.5),
+      a: "Naikkan"
+    };
+  }
+
+  if (p.t >= 0) {
+    return {
+      l: "MEDIUM DEMAND",
+      c: "a",
+      q: p.u,
+      a: "Pertahankan"
+    };
+  }
+
+  return {
+    l: "LOW DEMAND",
+    c: "r",
+    q: Math.round(p.u * 0.5),
+    a: "Kurangi"
+  };
 }
 
 function bd(c) {
-  return c === "g"
-    ? '<span class="badge b-g">ADVICE</span>'
-    : c === "r"
-      ? '<span class="badge b-r">COMPLAIN</span>'
-      : c === "s"
-        ? '<span class="badge b-a">STOK KURANG</span>'
-        : '<span class="badge b-p">PERTANYAAN</span>';
+  if (c === "g") {
+    return '<span class="badge b-g">ADVICE</span>';
+  }
+
+  if (c === "r") {
+    return '<span class="badge b-r">COMPLAIN</span>';
+  }
+
+  if (c === "s") {
+    return '<span class="badge b-a">STOK KURANG</span>';
+  }
+
+  return '<span class="badge b-p">PERTANYAAN</span>';
 }
 
 function low() {
   var x = 0;
+
   P.forEach(function (p, i) {
     if (stock(i) < p.min) x++;
   });
+
   return x;
 }
 
@@ -184,16 +218,37 @@ function rp(n) {
 
 function now() {
   var d = new Date();
+
   return "Hari ini, " +
     ("0" + d.getHours()).slice(-2) + "." +
     ("0" + d.getMinutes()).slice(-2);
+}
+
+/* LOGO HTML */
+
+function logoSidebar() {
+  return '<div class="logo">' +
+    '<span class="logo-img-crop">' +
+      '<img src="' + LOGO + '" alt="NataHub">' +
+    '</span>' +
+    '<span>NataHub</span>' +
+  '</div>';
+}
+
+function logoLogin() {
+  return '<div class="alogo">' +
+    '<span class="logo-img-crop login-symbol">' +
+      '<img src="' + LOGO + '" alt="NataHub">' +
+    '</span>' +
+  '</div>';
 }
 
 /* SIDEBAR */
 
 function sd() {
   $("side").innerHTML =
-    '<div class="logo"><i>N</i>NataHub</div>' +
+    logoSidebar() +
+
     MENU.map(function (x) {
       return '<button data-t="' + x[0] + '" aria-current="' +
         (tab === x[0] ? "page" : "false") + '">' +
@@ -203,9 +258,11 @@ function sd() {
           : "") +
         '</button>';
     }).join("") +
+
     '<button class="ai" data-t="kq" aria-current="' +
-    (tab === "kq" ? "page" : "false") +
-    '"><div class="lbl">Sisa kuota AI</div><b style="font-size:18px">Rp 43.000</b></button>';
+      (tab === "kq" ? "page" : "false") +
+      '"><div class="lbl">Sisa kuota AI</div>' +
+      '<b style="font-size:18px">Rp 43.000</b></button>';
 
   [].forEach.call($("side").querySelectorAll("button"), function (b) {
     b.onclick = function () {
@@ -222,7 +279,8 @@ function ov() {
   var ev = H.slice().reverse().map(function (h) {
     return '<li><div>' +
       (h.note || (h.k === "in" ? "Stok masuk" : "Stok keluar")) +
-      ': ' + (h.k === "in" ? "+" : "−") + h.q + ' ' + h.p +
+      ': ' + (h.k === "in" ? "+" : "−") +
+      h.q + ' ' + h.p +
       '</div><span>' + h.w + '</span></li>';
   }).join("");
 
@@ -232,22 +290,33 @@ function ov() {
     '<div class="stats">' +
       '<div class="card"><div class="lbl">Pesanan hari ini</div><div class="big">38</div></div>' +
       '<div class="card"><div class="lbl">Stok sinkron</div><div class="big up">99,4%</div></div>' +
-      '<div class="card"><div class="lbl">Pesan perlu disetujui</div><div class="big ' + (pending() ? "down" : "") + '">' + pending() + '</div></div>' +
-      '<div class="card"><div class="lbl">Stok menipis</div><div class="big" style="' + (low() ? "color:var(--a)" : "color:var(--g)") + '">' + low() + '</div></div>' +
+      '<div class="card"><div class="lbl">Pesan perlu disetujui</div><div class="big ' +
+        (pending() ? "down" : "") + '">' + pending() + '</div></div>' +
+      '<div class="card"><div class="lbl">Stok menipis</div><div class="big" style="' +
+        (low() ? "color:var(--a)" : "color:var(--g)") + '">' + low() + '</div></div>' +
     '</div>' +
 
     '<div class="two">' +
       '<div class="card"><h2>Yang perlu kamu lakukan</h2>' +
 
         (po ? "" :
-          '<div class="act g"><div><span class="badge b-g">SARAN</span><b>Setujui draf PO Kopi</b><span class="lbl">Kopi laku 24% lebih cepat dari biasanya.</span></div><button class="btn" data-go="rs">Lihat</button></div>') +
+          '<div class="act g"><div><span class="badge b-g">SARAN</span>' +
+          '<b>Setujui draf PO Kopi</b>' +
+          '<span class="lbl">Kopi laku 24% lebih cepat dari biasanya.</span></div>' +
+          '<button class="btn" data-go="rs">Lihat</button></div>') +
 
         (pending()
-          ? '<div class="act r"><div><span class="badge b-r">PERLU DISETUJUI</span><b>' + pending() + ' draf balasan menunggu</b><span class="lbl">Komplain, masukan, dan stok kurang.</span></div><button class="btn ghost" data-go="ib">Buka</button></div>'
+          ? '<div class="act r"><div><span class="badge b-r">PERLU DISETUJUI</span>' +
+            '<b>' + pending() + ' draf balasan menunggu</b>' +
+            '<span class="lbl">Komplain, masukan, dan stok kurang.</span></div>' +
+            '<button class="btn ghost" data-go="ib">Buka</button></div>'
           : "") +
 
         (low()
-          ? '<div class="act a"><div><span class="badge b-a">STOK MENIPIS</span><b>' + low() + ' produk di bawah minimum</b><span class="lbl">Susu UHT kedaluwarsa 20 hari lagi.</span></div><button class="btn ghost" data-go="inv">Cek</button></div>'
+          ? '<div class="act a"><div><span class="badge b-a">STOK MENIPIS</span>' +
+            '<b>' + low() + ' produk di bawah minimum</b>' +
+            '<span class="lbl">Susu UHT kedaluwarsa 20 hari lagi.</span></div>' +
+            '<button class="btn ghost" data-go="inv">Cek</button></div>'
           : "") +
       '</div>' +
 
@@ -279,10 +348,12 @@ function ib() {
       '<div class="bub">' + m.t + '</div>' +
       '<div class="bub me">' + r + '</div>' +
       '<div class="lbl">Dibalas otomatis. Angka diambil dari database stok, bukan ditebak AI.</div>';
+
   } else {
     right =
       '<span class="badge b-a">DRAFT MODE</span> ' + bd(m.c) +
       '<div class="bub">' + m.t + '</div>' +
+
       (m.sent
         ? '<div class="bub me">' + d + '</div><div class="lbl">Balasan terkirim.</div>'
         : '<div class="lbl" style="margin-bottom:6px">Draf balasan dari AI. Edit kalau perlu.</div>' +
@@ -671,7 +742,10 @@ function auth() {
 
   var hd =
     '<div class="ah">' +
-      '<div class="logo" style="padding:0"><i>N</i>NataHub</div>' +
+      '<div class="logo" style="padding:0">' +
+        '<span class="logo-img-crop"><img src="' + LOGO + '" alt="NataHub"></span>' +
+        '<span>NataHub</span>' +
+      '</div>' +
       '<div class="lbl">' +
         (lo
           ? 'Belum punya akun? <button class="lk" data-sc="r1">Daftar Bisnis</button>'
@@ -682,7 +756,7 @@ function auth() {
   if (lo) {
     b =
       '<div class="acard">' +
-        '<div class="alogo">N</div>' +
+        logoLogin() +
         '<h2 class="at">Masuk ke akun</h2>' +
         '<p class="lbl ac" style="margin:0 0 4px">Pusat kendali bisnis kamu</p>' +
 
@@ -775,7 +849,7 @@ function auth() {
     '<section class="auth-visual" aria-label="Tentang NataHub">' +
 
       '<div class="hero-brand">' +
-        '<img class="hero-logo-image" src="NataHub%20Purple%20Ribbon%20Logo.png" alt="NataHub logo">' +
+        '<img class="hero-logo-image" src="' + LOGO + '" alt="NataHub logo">' +
       '</div>' +
 
       '<div class="hero-content">' +
