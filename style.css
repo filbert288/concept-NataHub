@@ -489,14 +489,16 @@ input:focus-visible {
 }
 
 .alogo {
-  width: 47px;
-  height: 47px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
+  overflow: hidden;
   margin: 0 auto 16px;
+  border: 1px solid #eee7ff;
   border-radius: 15px;
-  background: linear-gradient(145deg, #987cff, #623ce3);
-  box-shadow: 0 8px 20px rgba(112, 73, 237, 0.2);
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(112, 73, 237, 0.12);
   color: #ffffff;
   font-size: 19px;
   font-weight: 800;
@@ -820,6 +822,46 @@ aside {
   color: #ffffff;
   font-size: 16px;
   font-style: normal;
+}
+
+.logo-img-crop {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  border: 1px solid #eee7ff;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.logo-img-crop img {
+  position: absolute;
+  display: block;
+  width: 67px;
+  height: 67px;
+  max-width: none;
+  left: -16px;
+  top: -10px;
+  object-fit: contain;
+}
+
+.login-symbol {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.login-symbol img {
+  position: absolute;
+  width: 89px;
+  height: 89px;
+  max-width: none;
+  left: -20px;
+  top: -14px;
 }
 
 aside > button {
@@ -1464,9 +1506,7 @@ textarea::placeholder {
   color: #a49db6;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* RESPONSIVE */
 
 @media (hover: hover) {
   .card {
