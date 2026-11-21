@@ -1,0 +1,201 @@
+/* NataHub — gaya aplikasi (Tailwind via CDN + override brand ungu) */
+
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: #F8F7FC;
+        color: #121D38;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    :root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+    html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+    .font-jakarta {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    @keyframes dashFlow {
+      to {
+        stroke-dashoffset: -24;
+      }
+    }
+    .wire-animated {
+      animation: dashFlow 1s linear infinite;
+    }
+    /* Custom subtle scrollbars */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E9E7F0;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #BC96FA;
+    }
+    /* Dot Grid Canvas */
+    .canvas-dot-grid {
+      background-color: #F8F7FC;
+      background-image: radial-gradient(#E9E7F0 1.15px, transparent 1.15px);
+      background-size: 20px 20px;
+    }
+    @keyframes nodePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(135, 169, 154, 0.55); }
+      50% { box-shadow: 0 0 0 8px rgba(135, 169, 154, 0); }
+    }
+    .sim-active-node {
+      animation: nodePulse 1s infinite;
+      border-color: #7A52F8 !important;
+      border-width: 2px !important;
+    }
+  
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal; font-style: normal;
+      font-size: 20px; line-height: 1; letter-spacing: normal;
+      text-transform: none; display: inline-block; white-space: nowrap;
+      word-wrap: normal; direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'liga';
+    }
+  
+
+    :root {
+      --nh-primary: #7A52F8;
+      --nh-deep-purple: #5832DC;
+      --nh-dark-violet: #3515AF;
+      --nh-soft-purple: #9A71FA;
+      --nh-lavender: #BC96FA;
+      --nh-light-lavender: #DBC6FB;
+      --nh-soft-bg: #F0EAFF;
+      --nh-page-bg: #F8F7FC;
+      --nh-card-bg: #FFFFFF;
+      --nh-text: #121D38;
+      --nh-muted: #707175;
+      --nh-border: #E9E7F0;
+      color-scheme: light;
+    }
+
+    html, body, .bg-cream-canvas {
+      background-color: var(--nh-page-bg) !important;
+      color: var(--nh-text);
+    }
+
+    .bg-white { background-color: var(--nh-card-bg) !important; }
+    .text-navy { color: var(--nh-text) !important; }
+    .text-navy-muted { color: var(--nh-muted) !important; }
+    .border-warm-border { border-color: var(--nh-border) !important; }
+    .bg-cream-canvas { background-color: var(--nh-page-bg) !important; }
+
+    /* Existing primary action surfaces become NataHub purple.
+       Text utilities remain independently mapped to their neutral colors. */
+    [class~="bg-navy"], [class~="bg-purple-600"], [class~="bg-blue-600"] {
+      background-color: var(--nh-primary) !important;
+    }
+    [class~="hover:bg-navy/90"]:hover,
+    [class~="hover:bg-purple-700"]:hover,
+    [class~="hover:bg-blue-700"]:hover {
+      background-color: var(--nh-deep-purple) !important;
+    }
+
+    /* Former sage theme tokens become the lavender brand family. */
+    [class~="bg-sage"] { background-color: var(--nh-lavender) !important; }
+    [class~="bg-sage-soft"] { background-color: var(--nh-soft-bg) !important; }
+    [class~="text-sage-dark"], [class~="text-purple-700"],
+    [class~="text-blue-600"], [class~="text-blue-700"] {
+      color: var(--nh-primary) !important;
+    }
+    [class~="border-sage"], [class~="border-purple-200"],
+    [class~="border-purple-300"], [class~="border-blue-200"],
+    [class~="border-blue-200/80"] {
+      border-color: var(--nh-light-lavender) !important;
+    }
+    [class~="ring-purple-100/70"] {
+      --tw-ring-color: var(--nh-soft-bg) !important;
+    }
+
+    /* Sky/blue informational accents follow the purple identity.
+       Marketplace channel colors and semantic success/warning/error states
+       remain intact for recognizability and operational clarity. */
+    [class~="bg-sky-50"], [class~="bg-blue-50"],
+    [class~="bg-purple-50"], [class~="bg-purple-100"],
+    [class~="bg-blue-100/90"], [class~="bg-sky-100/90"] {
+      background-color: var(--nh-soft-bg) !important;
+    }
+    [class~="text-sky-600"], [class~="text-sky-700"],
+    [class~="text-sky-800"], [class~="text-purple-800"] {
+      color: var(--nh-deep-purple) !important;
+    }
+    [class~="border-sky-100"], [class~="border-sky-200"],
+    [class~="border-sky-300"] {
+      border-color: var(--nh-light-lavender) !important;
+    }
+    [class~="hover:bg-sky-50"]:hover,
+    [class~="hover:bg-sage-soft/50"]:hover,
+    [class~="hover:bg-sage-soft/60"]:hover {
+      background-color: var(--nh-soft-bg) !important;
+    }
+
+    /* Focus states use the primary brand color. */
+    input:focus, textarea:focus, select:focus,
+    [class~="focus:ring-sage/40"]:focus {
+      --tw-ring-color: var(--nh-primary) !important;
+      border-color: var(--nh-primary) !important;
+      outline-color: var(--nh-primary) !important;
+    }
+
+    /* Primary-gradient treatment is reserved for existing purple CTA accents. */
+    [class~="bg-purple-600"] {
+      background-image: linear-gradient(110deg, #5832DC 0%, #7A52F8 48%, #BC96FA 100%) !important;
+    }
+
+    /* Keep card surfaces crisp while aligning subtle separators. */
+    .border, .border-t, .border-b, .border-l, .border-r {
+      border-color: var(--nh-border);
+    }
+    ::-webkit-scrollbar-thumb { background: #DBC6FB; }
+    ::-webkit-scrollbar-thumb:hover { background: #9A71FA; }
+  
+
+/* Logo NataHub (simbol N dipotong dari logo penuh milik repo) */
+.brand-mark {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  border: 1px solid #eee7ff;
+  border-radius: 11px;
+  background: #ffffff;
+}
+
+.brand-mark img {
+  position: absolute;
+  display: block;
+  width: 71px;
+  height: 71px;
+  max-width: none;
+  left: -17px;
+  top: -11px;
+  object-fit: contain;
+}
+
+/* Elemen dengan atribut hidden (gerbang login / app) harus benar-benar tersembunyi */
+[hidden] {
+  display: none !important;
+}
